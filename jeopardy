@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Plant Structure Jeopardy</title>
+  <style>
+    body { font-family: 'Poppins', sans-serif; background-color: #05386b; color: #fff; text-align: center; }
+    h1 { margin-top: 20px; }
+    .board { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; margin: 40px auto; width: 90%; }
+    .category { background-color: #379683; padding: 15px; font-weight: bold; border-radius: 10px; }
+    .tile { background-color: #5cdb95; color: #05386b; font-size: 24px; padding: 20px; border-radius: 10px; cursor: pointer; }
+    .tile:hover { background-color: #8ee4af; }
+    .question-box { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #edf5e1; color: #05386b; padding: 40px; border-radius: 15px; width: 60%; }
+    button { margin-top: 20px; padding: 10px 20px; border: none; background-color: #379683; color: white; font-weight: bold; border-radius: 8px; cursor: pointer; }
+    button:hover { background-color: #5cdb95; color: #05386b; }
+  </style>
+</head>
+<body>
+  <h1>🌿 Plant Structure & Growth Jeopardy 🌿</h1>
+  <div class="board" id="board"></div>
+
+  <div class="question-box" id="questionBox">
+    <h2 id="questionText"></h2>
+    <h3 id="answerText" style="display:none; margin-top:20px;"></h3>
+    <button id="showAnswer">Show Answer</button>
+    <button id="closeBox">Close</button>
+  </div>
+
+  <script>
+    const data = {
+      "Roots": [
+        [200, "Organ that anchors the plant and absorbs water and minerals.", "Root"],
+        [400, "Thin extensions of root epidermal cells that increase surface area.", "Root hairs"],
+        [600, "Roots that grow from stems or leaves.", "Adventitious roots"],
+        [800, "Selective barrier that regulates passage of substances into vascular tissue.", "Endodermis"],
+        [1000, "Cell layer that gives rise to lateral roots.", "Pericycle"]
+      ],
+      "Stems": [
+        [200, "Organ that elevates leaves for photosynthesis.", "Stem"],
+        [400, "Points on a stem where leaves attach.", "Nodes"],
+        [600, "Phenomenon keeping axillary buds dormant while apical bud is active.", "Apical dominance"],
+        [800, "Horizontal underground shoots used for storage.", "Rhizomes"],
+        [1000, "Surface-level runners used for asexual reproduction.", "Stolons"]
+      ],
+      "Leaves": [
+        [200, "Main photosynthetic organ of most vascular plants.", "Leaf"],
+        [400, "Two main leaf parts: flattened ____ and stalklike ____.", "Blade and petiole"],
+        [600, "Ground tissue specialized for photosynthesis.", "Mesophyll"],
+        [800, "Pores that allow gas exchange.", "Stomata"],
+        [1000, "Cactus spines are actually these.", "Leaves"]
+      ],
+      "Tissues & Cells": [
+        [200, "Three tissue systems in plants.", "Dermal, vascular, and ground"],
+        [400, "Thin-walled cells performing most metabolic functions.", "Parenchyma"],
+        [600, "Living cells with unevenly thick walls supporting young stems.", "Collenchyma"],
+        [800, "Rigid, lignified cells dead at maturity.", "Sclerenchyma"],
+        [1000, "Two xylem cell types conducting water.", "Tracheids and vessel elements"]
+      ],
+      "Growth & Development": [
+        [200, "Growth that lengthens roots and shoots.", "Primary growth"],
+        [400, "Growth that thickens stems and roots.", "Secondary growth"],
+        [600, "Undifferentiated tissues responsible for continuous growth.", "Meristems"],
+        [800, "Lateral meristem adding vascular tissue and producing wood.", "Vascular cambium"],
+        [1000, "Lateral meristem forming cork and outer bark.", "Cork cambium"]
+      ],
+      "Monocots vs Dicots": [
+        [200, "Monocot leaves have this venation.", "Parallel"],
+        [400, "Eudicot roots have this star-shaped xylem.", "Central xylem star"],
+        [600, "Monocot vascular bundles are arranged this way.", "Scattered in stem"],
+        [800, "First leaves of an embryo; monocots have one, dicots two.", "Cotyledons"],
+        [1000, "Vascular tissue core with xylem and phloem.", "Stele"]
+      ],
+      "Wood & Bark": [
+        [200, "Secondary xylem is called this.", "Wood"],
+        [400, "Visible rings in wood indicating annual growth.", "Growth rings"],
+        [600, "Waxy substance in cork cells making bark waterproof.", "Suberin"],
+        [800, "All tissues outside vascular cambium.", "Bark"],
+        [1000, "Radial parenchyma structures transporting nutrients laterally.", "Xylem and phloem rays"]
+      ]
+    };
+
+    const board = document.getElementById('board');
+    const questionBox = document.getElementById('questionBox');
+    const questionText = document.getElementById('questionText');
+    const answerText = document.getElementById('answerText');
+
+    for (const category in data) {
+      const div = document.createElement('div');
+      div.classList.add('category');
+      div.innerText = category;
+      board.appendChild(div);
+    }
+
+    const maxRows = 5;
+    for (let i = 0; i < maxRows; i++) {
+      for (const category in data) {
+        const [value, question, answer] = data[category][i];
+        const tile = document.createElement('div');
+        tile.classList.add('tile');
+        tile.innerText = `$${value}`;
+        tile.onclick = () => {
+          questionText.innerText = question;
+          answerText.innerText = `Answer: ${answer}`;
+          answerText.style.display = 'none';
+          questionBox.style.display = 'block';
+        };
+        board.appendChild(tile);
+      }
+    }
+
+    document.getElementById('showAnswer').onclick = () => answerText.style.display = 'block';
+    document.getElementById('closeBox').onclick = () => questionBox.style.display = 'none';
+  </script>
+</body>
+</html>
